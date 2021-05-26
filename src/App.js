@@ -30,7 +30,7 @@ export default class App extends Component {
     this.getStudents()
   }
   getStudents() {
-    fetch(baseURL, { mode: 'cors' })
+    fetch(baseURL)
       .then(
         (data) => {
           return data.json();
@@ -62,7 +62,6 @@ export default class App extends Component {
     console.log(this.state.firstName, this.state.lastName)
     fetch(baseURL, {
       method: "POST",
-      mode: 'cors',
       body: JSON.stringify({
         firstName: this.state.firstName,
         lastName: this.state.lastName
