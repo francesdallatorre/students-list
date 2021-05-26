@@ -3,13 +3,13 @@ import { Table, Form, Button } from 'react-bootstrap'
 import './App.css';
 
 
-let baseURL;
+let baseURL = "https://students-list-api.herokuapp.com/students"
 
-if (process.env.NODE_ENV === "development") {
-  baseURL = "http://localhost:3003";
-} else {
-  baseURL = "https://students-list-api.herokuapp.com/students";
-}
+// if (process.env.NODE_ENV === "development") {
+//   baseURL = "http://localhost:3003";
+// } else {
+//   baseURL = "https://students-list-api.herokuapp.com/students";
+// }
 
 export default class App extends Component {
   constructor(props) {
