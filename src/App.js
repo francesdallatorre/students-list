@@ -8,7 +8,7 @@ let baseURL;
 if (process.env.NODE_ENV === "development") {
   baseURL = "http://localhost:3003";
 } else {
-  baseURL = "https://students-list-api.herokuapp.com";
+  baseURL = "https://students-list-api.herokuapp.com/students";
 }
 
 export default class App extends Component {
@@ -30,7 +30,7 @@ export default class App extends Component {
     this.getStudents()
   }
   getStudents() {
-    fetch(baseURL + "/students")
+    fetch(baseURL, { mode: 'cors' })
       .then(
         (data) => {
           return data.json();
@@ -60,8 +60,9 @@ export default class App extends Component {
     e.preventDefault();
     console.log('submit btn pressed')
     console.log(this.state.firstName, this.state.lastName)
-    fetch(baseURL + "/students", {
+    fetch(baseURL, {
       method: "POST",
+      mode: 'cors',
       body: JSON.stringify({
         firstName: this.state.firstName,
         lastName: this.state.lastName
@@ -82,7 +83,7 @@ export default class App extends Component {
     console.log("submit");
   }
   deleteStudent(id) {
-    fetch(baseURL + "/students/" + id, {
+    fetch(baseURL + "/" + id, {
       method: "DELETE",
     }).then((res) => {
       const findIndex = this.state.students.findIndex(
