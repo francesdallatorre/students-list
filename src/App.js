@@ -3,7 +3,7 @@ import { Table, Form, Button } from 'react-bootstrap'
 import './App.css';
 
 
-let baseURL = "";
+let baseURL;
 
 if (process.env.NODE_ENV === "development") {
   baseURL = "http://localhost:3003";
