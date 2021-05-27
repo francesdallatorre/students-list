@@ -35,6 +35,7 @@ export default class App extends Component {
 
   componentDidMount() {
     this.getStudents()
+    this.rechapchaLoaded()
   }
 
   getStudents() {
@@ -68,30 +69,30 @@ export default class App extends Component {
     // if is verified then successfully add student to the list
     if (this.state.isVerified) {
       alert('You have successfully added a student')
-
-      fetch(baseURL, {
-        method: "POST",
-        body: JSON.stringify({
-          firstName: this.state.firstName,
-          lastName: this.state.lastName
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then((res) => res.json())
-        .then((resJson) => {
-          this.handleAddStudent(resJson);
-          this.setState({
-            firstName: "",
-            lastName: ""
-          })
-        })
-        .catch((error) => console.log({ Error: error }));
-      console.log("submit");
     } else {
       alert('Please verify you are a human')
     }
+    fetch(baseURL, {
+      method: "POST",
+      body: JSON.stringify({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((resJson) => {
+        this.handleAddStudent(resJson);
+        this.setState({
+          firstName: "",
+          lastName: ""
+        })
+      })
+      .catch((error) => console.log({ Error: error }));
+    console.log("submit");
+
   }
 
   deleteStudent(id) {
