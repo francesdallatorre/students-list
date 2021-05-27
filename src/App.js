@@ -1,15 +1,18 @@
 import { Component } from 'react';
 import { Table, Form, Button } from 'react-bootstrap'
+import Recaptcha from "react-recaptcha"
 import './App.css';
 
 
-let baseURL = "https://students-list-api.herokuapp.com/students"
+// let baseURL = "https://students-list-api.herokuapp.com/students"
 
-// if (process.env.NODE_ENV === "development") {
-//   baseURL = "http://localhost:3003";
-// } else {
-//   baseURL = "https://students-list-api.herokuapp.com/students";
-// }
+let baseURL;
+if (process.env.NODE_ENV === "development") {
+  baseURL = "http://localhost:3003/students";
+} else {
+  baseURL = "https://students-list-api.herokuapp.com/students";
+}
+
 
 export default class App extends Component {
   constructor(props) {
@@ -18,16 +21,21 @@ export default class App extends Component {
       firstName: '',
       lastName: '',
       students: [],
-
+      isVerified: false
     }
+
     this.getStudents = this.getStudents.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleAddStudent = this.handleAddStudent.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.rechapchaLoaded = this.rechapchaLoaded.bind(this)
+    this.verifyCallback = this.verifyCallback.bind(this)
 
   }
+
   componentDidMount() {
     this.getStudents()
+
   }
   getStudents() {
     fetch(baseURL)
@@ -58,28 +66,32 @@ export default class App extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    console.log('submit btn pressed')
-    console.log(this.state.firstName, this.state.lastName)
-    fetch(baseURL, {
-      method: "POST",
-      body: JSON.stringify({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then((res) => res.json())
-      .then((resJson) => {
-        this.handleAddStudent(resJson);
-        this.setState({
-          firstName: "",
-          lastName: ""
-        })
+    if (this.state.isVerified) {
+      alert('You have successfully added a student')
+
+      fetch(baseURL, {
+        method: "POST",
+        body: JSON.stringify({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
       })
-      .catch((error) => console.log({ Error: error }));
-    console.log("submit");
+        .then((res) => res.json())
+        .then((resJson) => {
+          this.handleAddStudent(resJson);
+          this.setState({
+            firstName: "",
+            lastName: ""
+          })
+        })
+        .catch((error) => console.log({ Error: error }));
+      console.log("submit");
+    } else {
+      alert('Please verify you are a human')
+    }
   }
   deleteStudent(id) {
     fetch(baseURL + "/" + id, {
@@ -94,6 +106,16 @@ export default class App extends Component {
         students: copyStudents
       })
     })
+  }
+  rechapchaLoaded() {
+    console.log('recaptcha successfully loaded')
+  }
+  verifyCallback(response) {
+    if (response) {
+      this.setState({
+        isVerified: true
+      })
+    }
   }
   render() {
     return (
@@ -123,6 +145,7 @@ export default class App extends Component {
           </tbody>
         </Table >
         <h3>Add a Student to the List</h3>
+
         {/* Form */}
         < Form onSubmit={this.handleSubmit}>
           <Form.Label>First Name</Form.Label>
@@ -146,6 +169,13 @@ export default class App extends Component {
             Submit
           </Button>
         </Form >
+        {/* reCAPTCHA */}
+        <Recaptcha
+          sitekey="6LcSh_MaAAAAANRJVCLFsDLGvknU-H6XhtAcoB4P"
+          render="explicit"
+          onloadCallback={this.rechapchaLoaded}
+          verifyCallback={this.verifyCallback}
+        />
       </div >
     );
   }
