@@ -4,4 +4,5 @@
 
 ## Technologies Used
 
-### React, Node, MongoDB, Express (MERN), BootStrap, Google Recaptcha
+### React, Node, MongoDB, Express, BootStrap, Google Recaptcha
+
