@@ -1,8 +1,31 @@
+body {
+  background-color: rgb(228, 224, 218);
+}
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 50px;
 }
-h1 {
+h1,
+h4 {
   text-align: center;
+  margin-bottom: 50px;
+}
+.table {
+  width: 300px;
+  align-self: center;
+  margin: 0 auto;
+}
+.form {
+  width: 300px;
+  align-self: center;
+}
+.button {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 7px;
+}
+button {
+  margin: 10px 0px 50px 200px;
 }

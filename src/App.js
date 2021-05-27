@@ -1,11 +1,12 @@
 import { Component } from 'react';
-import { Table, Form, Button } from 'react-bootstrap'
+import { Table, Form, Button, Alert } from 'react-bootstrap'
 import Recaptcha from "react-recaptcha"
 import './App.css';
 
 
 let baseURL = "https://students-list-api.herokuapp.com/students"
 
+// on local machine try this code below
 // let baseURL;
 // if (process.env.NODE_ENV === "development") {
 //   baseURL = "http://localhost:3003/students";
@@ -60,7 +61,6 @@ export default class App extends Component {
 
   handleChange(e) {
     this.setState({ [e.target.id]: e.target.value })
-    console.log(e.target.value)
   }
 
   handleSubmit(e) {
@@ -125,14 +125,15 @@ export default class App extends Component {
         <h1>Students' List</h1>
 
         {/* Table */}
-        <Table>
+
+        <Table className="table">
           <thead>
             {
               this.state.students.map(student => {
                 return (
                   <tr>
                     <th>{student.firstName}</th>
-                    <th>{student.lastName}</th><button onClick={() => this.deleteStudent(student._id)}>delete</button>
+                    <th>{student.lastName}</th><div className="button" onClick={() => this.deleteStudent(student._id)}>x</div>
                   </tr>
                 )
               })
@@ -146,38 +147,44 @@ export default class App extends Component {
             </tr>
           </tbody>
         </Table >
-        <h3>Add a Student to the List</h3>
+
 
         {/* Form */}
-        < Form onSubmit={this.handleSubmit}>
-          <Form.Label>First Name</Form.Label>
-          <Form.Control
-            onChange={this.handleChange}
-            type="text"
-            placeholder="John"
-            name="firstName"
-            id="firstName"
-            value={this.state.firstName}
-          />
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control
-            onChange={this.handleChange}
-            type="text"
-            placeholder="Doe"
-            name="lastName"
-            id="lastName"
-            value={this.state.lastName} />
-          <Button variant="primary" type="submit">
-            Submit
+        <div className="form">
+          <h4>Add a Student to the List</h4>
+          < Form onSubmit={this.handleSubmit}>
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              onChange={this.handleChange}
+              type="text"
+              placeholder="John"
+              name="firstName"
+              id="firstName"
+              value={this.state.firstName}
+            />
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              onChange={this.handleChange}
+              type="text"
+              placeholder="Doe"
+              name="lastName"
+              id="lastName"
+              value={this.state.lastName} />
+            <Button variant="info" type="submit">
+              Submit
           </Button>
-        </Form >
-        {/* reCAPTCHA */}
-        <Recaptcha
-          sitekey="6LcSh_MaAAAAANRJVCLFsDLGvknU-H6XhtAcoB4P"
-          render="explicit"
-          onloadCallback={this.rechapchaLoaded}
-          verifyCallback={this.verifyCallback}
-        />
+            {/* reCAPTCHA */}
+            <Recaptcha
+              sitekey="6LcSh_MaAAAAANRJVCLFsDLGvknU-H6XhtAcoB4P"
+              render="explicit"
+              onloadCallback={this.rechapchaLoaded}
+              verifyCallback={this.verifyCallback}
+            />
+          </Form >
+
+
+        </div>
+
       </div >
     );
   }
