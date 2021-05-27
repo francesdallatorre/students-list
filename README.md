@@ -1,8 +1,19 @@
-## iTech AG Assesment
+# iTECH AG Assessment!
 
-### Built an application to add students to a table, user can add and delete students.
+### Link to deployed app
+
+[Students Table](https://students-list-frontend.herokuapp.com/)
+
+## Overview
+This App was built to add students to a list. User can add and delete students
 
 ## Technologies Used
 
-### React, Node, MongoDB, Express, BootStrap, Google Recaptcha
+- Node.js
+- React
+- Express
+- MongoDB
+- BootStrap
+- Google reCaptcha
+- Deployed app on Heroku
 
