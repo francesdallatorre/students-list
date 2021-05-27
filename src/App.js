@@ -4,14 +4,14 @@ import Recaptcha from "react-recaptcha"
 import './App.css';
 
 
-// let baseURL = "https://students-list-api.herokuapp.com/students"
+let baseURL = "https://students-list-api.herokuapp.com/students"
 
-let baseURL;
-if (process.env.NODE_ENV === "development") {
-  baseURL = "http://localhost:3003/students";
-} else {
-  baseURL = "https://students-list-api.herokuapp.com/students";
-}
+// let baseURL;
+// if (process.env.NODE_ENV === "development") {
+//   baseURL = "http://localhost:3003/students";
+// } else {
+//   baseURL = "https://students-list-api.herokuapp.com/students";
+// }
 
 
 export default class App extends Component {
@@ -23,7 +23,6 @@ export default class App extends Component {
       students: [],
       isVerified: false
     }
-
     this.getStudents = this.getStudents.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleAddStudent = this.handleAddStudent.bind(this)
@@ -35,8 +34,8 @@ export default class App extends Component {
 
   componentDidMount() {
     this.getStudents()
-
   }
+
   getStudents() {
     fetch(baseURL)
       .then(
@@ -49,7 +48,6 @@ export default class App extends Component {
         (parsedData) => this.setState({ students: parsedData }),
         (err) => console.log(err)
       )
-
   }
 
   handleAddStudent(student) {
@@ -64,8 +62,10 @@ export default class App extends Component {
     this.setState({ [e.target.id]: e.target.value })
     console.log(e.target.value)
   }
+
   handleSubmit(e) {
     e.preventDefault();
+    // if is verified then successfully add student to the list
     if (this.state.isVerified) {
       alert('You have successfully added a student')
 
@@ -93,6 +93,7 @@ export default class App extends Component {
       alert('Please verify you are a human')
     }
   }
+
   deleteStudent(id) {
     fetch(baseURL + "/" + id, {
       method: "DELETE",
@@ -107,6 +108,7 @@ export default class App extends Component {
       })
     })
   }
+
   rechapchaLoaded() {
     console.log('recaptcha successfully loaded')
   }
@@ -120,10 +122,10 @@ export default class App extends Component {
   render() {
     return (
       <div className="container" >
-        <h1>Students</h1>
+        <h1>Students' List</h1>
 
         {/* Table */}
-        <Table striped bordered hover>
+        <Table>
           <thead>
             {
               this.state.students.map(student => {
