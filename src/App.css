@@ -10,7 +10,7 @@ body {
 h1,
 h4 {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .table {
   width: 300px;
@@ -27,5 +27,5 @@ h4 {
   margin-top: 7px;
 }
 button {
-  margin: 10px 0px 50px 200px;
+  margin: 10px 0px 50px 120px;
 }
